@@ -149,10 +149,90 @@ func (m *SumResponse) GetResult() int32 {
 	return 0
 }
 
+type DecompositManyTimeRequest struct {
+	PrimeNumber          int32    `protobuf:"varint,1,opt,name=primeNumber,proto3" json:"primeNumber,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *DecompositManyTimeRequest) Reset()         { *m = DecompositManyTimeRequest{} }
+func (m *DecompositManyTimeRequest) String() string { return proto.CompactTextString(m) }
+func (*DecompositManyTimeRequest) ProtoMessage()    {}
+func (*DecompositManyTimeRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_7f42938f8c8365cf, []int{3}
+}
+
+func (m *DecompositManyTimeRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_DecompositManyTimeRequest.Unmarshal(m, b)
+}
+func (m *DecompositManyTimeRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_DecompositManyTimeRequest.Marshal(b, m, deterministic)
+}
+func (m *DecompositManyTimeRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DecompositManyTimeRequest.Merge(m, src)
+}
+func (m *DecompositManyTimeRequest) XXX_Size() int {
+	return xxx_messageInfo_DecompositManyTimeRequest.Size(m)
+}
+func (m *DecompositManyTimeRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_DecompositManyTimeRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DecompositManyTimeRequest proto.InternalMessageInfo
+
+func (m *DecompositManyTimeRequest) GetPrimeNumber() int32 {
+	if m != nil {
+		return m.PrimeNumber
+	}
+	return 0
+}
+
+type DecompositManyTimesResponse struct {
+	Result               int32    `protobuf:"varint,1,opt,name=result,proto3" json:"result,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *DecompositManyTimesResponse) Reset()         { *m = DecompositManyTimesResponse{} }
+func (m *DecompositManyTimesResponse) String() string { return proto.CompactTextString(m) }
+func (*DecompositManyTimesResponse) ProtoMessage()    {}
+func (*DecompositManyTimesResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_7f42938f8c8365cf, []int{4}
+}
+
+func (m *DecompositManyTimesResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_DecompositManyTimesResponse.Unmarshal(m, b)
+}
+func (m *DecompositManyTimesResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_DecompositManyTimesResponse.Marshal(b, m, deterministic)
+}
+func (m *DecompositManyTimesResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DecompositManyTimesResponse.Merge(m, src)
+}
+func (m *DecompositManyTimesResponse) XXX_Size() int {
+	return xxx_messageInfo_DecompositManyTimesResponse.Size(m)
+}
+func (m *DecompositManyTimesResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_DecompositManyTimesResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DecompositManyTimesResponse proto.InternalMessageInfo
+
+func (m *DecompositManyTimesResponse) GetResult() int32 {
+	if m != nil {
+		return m.Result
+	}
+	return 0
+}
+
 func init() {
-	proto.RegisterType((*Sum)(nil), "sum.Sum")
-	proto.RegisterType((*SumRequest)(nil), "sum.SumRequest")
-	proto.RegisterType((*SumResponse)(nil), "sum.SumResponse")
+	proto.RegisterType((*Sum)(nil), "calculator.Sum")
+	proto.RegisterType((*SumRequest)(nil), "calculator.SumRequest")
+	proto.RegisterType((*SumResponse)(nil), "calculator.SumResponse")
+	proto.RegisterType((*DecompositManyTimeRequest)(nil), "calculator.DecompositManyTimeRequest")
+	proto.RegisterType((*DecompositManyTimesResponse)(nil), "calculator.DecompositManyTimesResponse")
 }
 
 func init() {
@@ -160,20 +240,25 @@ func init() {
 }
 
 var fileDescriptor_7f42938f8c8365cf = []byte{
-	// 202 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x4c, 0x8f, 0x41, 0x4b, 0x85, 0x40,
-	0x14, 0x85, 0x31, 0x49, 0xf4, 0x1a, 0x15, 0xb3, 0x88, 0x30, 0x82, 0x10, 0x82, 0x59, 0x19, 0x18,
-	0xb4, 0xaf, 0x1f, 0xe0, 0x42, 0x77, 0x6d, 0x42, 0xa7, 0x09, 0x04, 0xc7, 0xb1, 0xb9, 0x73, 0xdf,
-	0xef, 0x7f, 0x78, 0x47, 0x9e, 0xee, 0xe6, 0x9c, 0x33, 0x7c, 0xe7, 0x1e, 0x90, 0xaa, 0x9f, 0x14,
-	0x4d, 0xbd, 0xb7, 0xee, 0x6d, 0x7f, 0x2e, 0xc3, 0x41, 0x54, 0x8b, 0xb3, 0xde, 0x8a, 0x18, 0xc9,
-	0x94, 0x9f, 0x10, 0x77, 0x64, 0xc4, 0x13, 0x64, 0x7f, 0xa3, 0x43, 0xff, 0x33, 0x93, 0x79, 0x8c,
-	0x5e, 0x22, 0x79, 0xdd, 0xa6, 0x6c, 0x34, 0x64, 0xc4, 0x33, 0x00, 0x6a, 0x65, 0xe7, 0x5f, 0x4e,
-	0xaf, 0x38, 0xcd, 0x82, 0xd3, 0x90, 0x29, 0x25, 0x40, 0x47, 0xa6, 0xd5, 0xff, 0xa4, 0xd1, 0x8b,
-	0x02, 0x56, 0x2e, 0x33, 0xf2, 0x3a, 0xad, 0x90, 0x4c, 0xb5, 0xa6, 0x5c, 0xf6, 0x0a, 0x39, 0xff,
-	0xc4, 0xc5, 0xce, 0xa8, 0xc5, 0x03, 0x24, 0x4e, 0x23, 0x4d, 0x7e, 0x6b, 0xdc, 0x54, 0xfd, 0xc1,
-	0xc0, 0x4e, 0xbb, 0xd3, 0xa8, 0xb4, 0x90, 0xe1, 0xc2, 0xbb, 0x0b, 0x2a, 0x14, 0x15, 0xf7, 0xbb,
-	0x11, 0x78, 0x5f, 0xb7, 0xdf, 0x37, 0xc7, 0xc5, 0x43, 0xc2, 0x3b, 0xdf, 0xcf, 0x01, 0x00, 0x00,
-	0xff, 0xff, 0x9c, 0x35, 0xed, 0xb6, 0x13, 0x01, 0x00, 0x00,
+	// 277 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x51, 0x4d, 0x4b, 0xc3, 0x40,
+	0x14, 0x34, 0x16, 0x8b, 0x7d, 0x11, 0x95, 0x15, 0xaa, 0xb6, 0x08, 0x75, 0xa1, 0xd8, 0x53, 0x2b,
+	0x15, 0xbd, 0x79, 0xf0, 0xe3, 0x6a, 0x0e, 0x8d, 0x27, 0x2f, 0x92, 0xac, 0x4f, 0x58, 0xc8, 0x66,
+	0xd7, 0xfd, 0x10, 0xfc, 0x61, 0xfe, 0x3f, 0xe9, 0x66, 0xb5, 0x8b, 0xf1, 0xe3, 0x96, 0x37, 0x6f,
+	0x26, 0x33, 0xb3, 0x0f, 0x26, 0xac, 0xa8, 0x98, 0xab, 0x0a, 0x2b, 0xf5, 0x6c, 0xf5, 0xa9, 0xca,
+	0x68, 0x98, 0x2a, 0x2d, 0xad, 0x24, 0xb0, 0x42, 0xe8, 0x15, 0x74, 0x72, 0x27, 0xc8, 0x10, 0x7a,
+	0xcf, 0x5c, 0x1b, 0xfb, 0x58, 0x3b, 0x71, 0x90, 0x8c, 0x92, 0xc9, 0xc6, 0x62, 0xd3, 0x03, 0x99,
+	0x13, 0xe4, 0x08, 0xc0, 0x20, 0x93, 0xf5, 0x93, 0xdf, 0xae, 0xfb, 0x6d, 0xaf, 0x41, 0x32, 0x27,
+	0xe8, 0x0c, 0x20, 0x77, 0x62, 0x81, 0x2f, 0x0e, 0x8d, 0x25, 0xc7, 0xd0, 0x31, 0xe1, 0x1f, 0xe9,
+	0x7c, 0x67, 0x1a, 0x99, 0x2f, 0x49, 0xcb, 0x1d, 0x1d, 0x43, 0xea, 0x05, 0x46, 0xc9, 0xda, 0x20,
+	0xe9, 0x43, 0x57, 0xa3, 0x71, 0x95, 0x0d, 0xc6, 0x61, 0xa2, 0x97, 0x70, 0x78, 0x8b, 0x4c, 0x0a,
+	0x25, 0x0d, 0xb7, 0x77, 0x45, 0xfd, 0x76, 0xcf, 0x05, 0x7e, 0xda, 0x8c, 0x20, 0x55, 0x9a, 0x0b,
+	0xcc, 0x9c, 0x28, 0x51, 0x07, 0x65, 0x0c, 0xd1, 0x73, 0x18, 0xb6, 0xe5, 0xe6, 0x3f, 0xd7, 0xf9,
+	0x7b, 0x02, 0xbb, 0x37, 0x21, 0x34, 0xe6, 0xa8, 0x5f, 0x39, 0x43, 0x72, 0xd1, 0xbc, 0x52, 0xff,
+	0x7b, 0x9d, 0x26, 0xcc, 0x60, 0xbf, 0x85, 0x07, 0x13, 0x0e, 0x7b, 0x3f, 0x64, 0x20, 0xe3, 0x98,
+	0xff, 0x6b, 0xc7, 0xc1, 0xc9, 0xdf, 0xb4, 0xaf, 0x2e, 0x74, 0xed, 0x34, 0xb9, 0xde, 0x7e, 0xd8,
+	0x8a, 0xaf, 0x5e, 0x76, 0xfd, 0xad, 0xcf, 0x3e, 0x02, 0x00, 0x00, 0xff, 0xff, 0x28, 0xff, 0x29,
+	0xeb, 0x17, 0x02, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -184,76 +269,142 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// SumServiceClient is the client API for SumService service.
+// CalculateServiceClient is the client API for CalculateService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type SumServiceClient interface {
+type CalculateServiceClient interface {
 	// Unary
 	Sum(ctx context.Context, in *SumRequest, opts ...grpc.CallOption) (*SumResponse, error)
+	// Server Streaming
+	DecompositManyTimes(ctx context.Context, in *DecompositManyTimeRequest, opts ...grpc.CallOption) (CalculateService_DecompositManyTimesClient, error)
 }
 
-type sumServiceClient struct {
+type calculateServiceClient struct {
 	cc *grpc.ClientConn
 }
 
-func NewSumServiceClient(cc *grpc.ClientConn) SumServiceClient {
-	return &sumServiceClient{cc}
+func NewCalculateServiceClient(cc *grpc.ClientConn) CalculateServiceClient {
+	return &calculateServiceClient{cc}
 }
 
-func (c *sumServiceClient) Sum(ctx context.Context, in *SumRequest, opts ...grpc.CallOption) (*SumResponse, error) {
+func (c *calculateServiceClient) Sum(ctx context.Context, in *SumRequest, opts ...grpc.CallOption) (*SumResponse, error) {
 	out := new(SumResponse)
-	err := c.cc.Invoke(ctx, "/sum.SumService/Sum", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/calculator.CalculateService/Sum", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// SumServiceServer is the server API for SumService service.
-type SumServiceServer interface {
+func (c *calculateServiceClient) DecompositManyTimes(ctx context.Context, in *DecompositManyTimeRequest, opts ...grpc.CallOption) (CalculateService_DecompositManyTimesClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_CalculateService_serviceDesc.Streams[0], "/calculator.CalculateService/DecompositManyTimes", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &calculateServiceDecompositManyTimesClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type CalculateService_DecompositManyTimesClient interface {
+	Recv() (*DecompositManyTimesResponse, error)
+	grpc.ClientStream
+}
+
+type calculateServiceDecompositManyTimesClient struct {
+	grpc.ClientStream
+}
+
+func (x *calculateServiceDecompositManyTimesClient) Recv() (*DecompositManyTimesResponse, error) {
+	m := new(DecompositManyTimesResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+// CalculateServiceServer is the server API for CalculateService service.
+type CalculateServiceServer interface {
 	// Unary
 	Sum(context.Context, *SumRequest) (*SumResponse, error)
+	// Server Streaming
+	DecompositManyTimes(*DecompositManyTimeRequest, CalculateService_DecompositManyTimesServer) error
 }
 
-// UnimplementedSumServiceServer can be embedded to have forward compatible implementations.
-type UnimplementedSumServiceServer struct {
+// UnimplementedCalculateServiceServer can be embedded to have forward compatible implementations.
+type UnimplementedCalculateServiceServer struct {
 }
 
-func (*UnimplementedSumServiceServer) Sum(ctx context.Context, req *SumRequest) (*SumResponse, error) {
+func (*UnimplementedCalculateServiceServer) Sum(ctx context.Context, req *SumRequest) (*SumResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Sum not implemented")
 }
-
-func RegisterSumServiceServer(s *grpc.Server, srv SumServiceServer) {
-	s.RegisterService(&_SumService_serviceDesc, srv)
+func (*UnimplementedCalculateServiceServer) DecompositManyTimes(req *DecompositManyTimeRequest, srv CalculateService_DecompositManyTimesServer) error {
+	return status.Errorf(codes.Unimplemented, "method DecompositManyTimes not implemented")
 }
 
-func _SumService_Sum_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func RegisterCalculateServiceServer(s *grpc.Server, srv CalculateServiceServer) {
+	s.RegisterService(&_CalculateService_serviceDesc, srv)
+}
+
+func _CalculateService_Sum_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SumRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SumServiceServer).Sum(ctx, in)
+		return srv.(CalculateServiceServer).Sum(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/sum.SumService/Sum",
+		FullMethod: "/calculator.CalculateService/Sum",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SumServiceServer).Sum(ctx, req.(*SumRequest))
+		return srv.(CalculateServiceServer).Sum(ctx, req.(*SumRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-var _SumService_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "sum.SumService",
-	HandlerType: (*SumServiceServer)(nil),
+func _CalculateService_DecompositManyTimes_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(DecompositManyTimeRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(CalculateServiceServer).DecompositManyTimes(m, &calculateServiceDecompositManyTimesServer{stream})
+}
+
+type CalculateService_DecompositManyTimesServer interface {
+	Send(*DecompositManyTimesResponse) error
+	grpc.ServerStream
+}
+
+type calculateServiceDecompositManyTimesServer struct {
+	grpc.ServerStream
+}
+
+func (x *calculateServiceDecompositManyTimesServer) Send(m *DecompositManyTimesResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+var _CalculateService_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "calculator.CalculateService",
+	HandlerType: (*CalculateServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Sum",
-			Handler:    _SumService_Sum_Handler,
+			Handler:    _CalculateService_Sum_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "DecompositManyTimes",
+			Handler:       _CalculateService_DecompositManyTimes_Handler,
+			ServerStreams: true,
+		},
+	},
 	Metadata: "calculator/calculatorpb/calculator.proto",
 }

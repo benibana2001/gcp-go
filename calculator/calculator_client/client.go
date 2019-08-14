@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/benibana2001/gcp-go/calculator/calculatorpb"
 	"google.golang.org/grpc"
+	"io"
 	"log"
 )
 
@@ -18,11 +19,37 @@ func main() {
 
 	defer cc.Close()
 
-	c := calculatorpb.NewSumServiceClient(cc)
-	doUnary(c)
+	c := calculatorpb.NewCalculateServiceClient(cc)
+	//doUnary(c)
+
+	doServerStreaming(c)
 }
 
-func doUnary(c calculatorpb.SumServiceClient) {
+func doServerStreaming(c calculatorpb.CalculateServiceClient)  {
+	fmt.Println("Starting to do a Server Streaming RPC...")
+
+	req := &calculatorpb.DecompositManyTimeRequest{
+		PrimeNumber: 1000,
+	}
+
+	resStream, err := c.DecompositManyTimes(context.Background(), req)
+	if err != nil {
+		log.Fatalf("error while callng Greet RPC: %v", err)
+	}
+
+	for {
+		msg, err := resStream.Recv()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			fmt.Printf("error while reading stream: %v",err)
+		}
+		fmt.Printf("Response from DecompositManyTimes: %v\n", msg.GetResult())
+	}
+}
+
+func doUnary(c calculatorpb.CalculateServiceClient) {
 	fmt.Println("Starting to do a Unary RPC...")
 
 	req := &calculatorpb.SumRequest{

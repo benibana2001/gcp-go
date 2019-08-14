@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package sum;
+package calculator;
 option go_package="calculatorpb";
 
 message Sum {
@@ -16,7 +16,18 @@ message SumResponse {
     int32 result = 1;
 }
 
-service SumService {
+message DecompositManyTimeRequest {
+    int32 primeNumber = 1;
+}
+
+message DecompositManyTimesResponse {
+    int32 result = 1;
+}
+
+service CalculateService {
     // Unary
     rpc Sum(SumRequest) returns(SumResponse);
+
+    // Server Streaming
+    rpc DecompositManyTimes(DecompositManyTimeRequest) returns (stream DecompositManyTimesResponse) {};
 }

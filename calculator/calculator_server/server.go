@@ -24,6 +24,26 @@ func (*server) Sum(ctx context.Context, req *calculatorpb.SumRequest) (*calculat
 	return res, nil
 }
 
+
+func (*server) DecompositManyTimes(req *calculatorpb.DecompositManyTimeRequest, stream calculatorpb.CalculateService_DecompositManyTimesServer) error {
+	fmt.Printf("DecompositManyTimes function was invoked with %v\n", req)
+	primeNumber := req.GetPrimeNumber()
+
+	var k int32 = 2
+	for primeNumber > 1 {
+		if primeNumber % k == 0 {
+			res := &calculatorpb.DecompositManyTimesResponse{
+				Result: k,
+			}
+			primeNumber = primeNumber / k
+			stream.Send(res)
+		}else {
+			k = k + 1
+		}
+	}
+	return nil
+}
+
 func main() {
 	fmt.Println("Hello Sum Server!")
 
@@ -33,7 +53,7 @@ func main() {
 	}
 
 	s := grpc.NewServer()
-	calculatorpb.RegisterSumServiceServer(s, &server{})
+	calculatorpb.RegisterCalculateServiceServer(s, &server{})
 
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
