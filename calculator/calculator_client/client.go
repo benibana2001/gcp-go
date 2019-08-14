@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/benibana2001/gcp-go/sum/sumpb"
+	"github.com/benibana2001/gcp-go/calculator/calculatorpb"
 	"google.golang.org/grpc"
 	"log"
 )
@@ -18,15 +18,15 @@ func main() {
 
 	defer cc.Close()
 
-	c := sumpb.NewSumServiceClient(cc)
+	c := calculatorpb.NewSumServiceClient(cc)
 	doUnary(c)
 }
 
-func doUnary(c sumpb.SumServiceClient) {
+func doUnary(c calculatorpb.SumServiceClient) {
 	fmt.Println("Starting to do a Unary RPC...")
 
-	req := &sumpb.SumRequest{
-		Sum: &sumpb.Sum{
+	req := &calculatorpb.SumRequest{
+		Sum: &calculatorpb.Sum{
 			FirstNum: 10,
 			SecondNum: 2,
 		},

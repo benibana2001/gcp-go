@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package sum;
-option go_package="sumpb";
+option go_package="calculatorpb";
 
 message Sum {
     int32 first_num = 1;
