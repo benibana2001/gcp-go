@@ -24,10 +24,22 @@ message DecompositManyTimesResponse {
     int32 result = 1;
 }
 
+// Client Streaming
+message ComputeAverageRequest {
+    int32 number = 1;
+}
+
+message ComputeAverageResponse {
+    int32 result = 1;
+}
+
 service CalculateService {
     // Unary
     rpc Sum(SumRequest) returns(SumResponse);
 
     // Server Streaming
     rpc DecompositManyTimes(DecompositManyTimeRequest) returns (stream DecompositManyTimesResponse) {};
+
+    // Client Streaming
+    rpc ComputeAverage(stream ComputeAverageRequest) returns (ComputeAverageResponse) {};
 }

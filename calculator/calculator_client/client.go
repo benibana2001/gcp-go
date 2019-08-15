@@ -7,6 +7,7 @@ import (
 	"google.golang.org/grpc"
 	"io"
 	"log"
+	"time"
 )
 
 func main() {
@@ -22,7 +23,48 @@ func main() {
 	c := calculatorpb.NewCalculateServiceClient(cc)
 	//doUnary(c)
 
-	doServerStreaming(c)
+	//doServerStreaming(c)
+
+	doClientStreming(c)
+}
+
+func doClientStreming(c calculatorpb.CalculateServiceClient) {
+	fmt.Println("Starting to do a Client Streaming RPC...")
+
+	reqests := []*calculatorpb.ComputeAverageRequest{
+		&calculatorpb.ComputeAverageRequest{
+			Number: 10,
+		},
+		&calculatorpb.ComputeAverageRequest{
+			Number: 12,
+		},
+		&calculatorpb.ComputeAverageRequest{
+			Number: 18,
+		},
+		&calculatorpb.ComputeAverageRequest{
+			Number: 20,
+		},
+		&calculatorpb.ComputeAverageRequest{
+			Number: 30,
+		},
+	}
+
+	stream, err := c.ComputeAverage(context.Background())
+	if err != nil {
+		fmt.Printf("error while calling LongServer: %v", err)
+	}
+
+	for _, req := range reqests {
+		fmt.Printf("Sending req: %v\n", req)
+		stream.Send(req)
+		time.Sleep(1000 * time.Millisecond)
+	}
+
+	res, err := stream.CloseAndRecv()
+	if err != nil {
+		fmt.Printf("error while receiving LongServer: %v", err)
+	}
+	fmt.Printf("ComputeAverate Response: %v\n", res)
 }
 
 func doServerStreaming(c calculatorpb.CalculateServiceClient)  {

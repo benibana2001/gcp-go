@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/benibana2001/gcp-go/calculator/calculatorpb"
 	"google.golang.org/grpc"
+	"io"
 	"log"
 	"net"
 )
@@ -22,6 +23,28 @@ func (*server) Sum(ctx context.Context, req *calculatorpb.SumRequest) (*calculat
 		Result: amount,
 	}
 	return res, nil
+}
+
+// Client Streaming
+func (*server) ComputeAverage(stream calculatorpb.CalculateService_ComputeAverageServer) error {
+	fmt.Printf("ComputeAverate function was invoked with a streaming request\n")
+	var result int32
+	var i int32
+	for {
+		req, err := stream.Recv()
+		if err == io.EOF {
+			// finish running server
+			return stream.SendAndClose(&calculatorpb.ComputeAverageResponse{
+				Result: result / i,
+			})
+		}
+		if err != nil {
+			fmt.Printf("Error while reading stream: %v", err)
+		}
+		num := req.GetNumber()
+		result += num
+		i++
+	}
 }
 
 
