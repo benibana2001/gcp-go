@@ -26,13 +26,84 @@ func main() {
 
 	//doServerStreaming(c)
 
-	doClientStreaming(c)
+	//doClientStreaming(c)
+
+	doBiDiStreaming(c)
+}
+
+func doBiDiStreaming(c greetpb.GreetServiceClient) {
+	fmt.Println("Starting to do a BiDi Streaming RPC...")
+
+	// create a stream
+	stream, err := c.GreetEveryone(context.Background())
+	if err != nil {
+		fmt.Printf("error while creating stream: %v", err)
+		return
+	}
+	requests := []*greetpb.GreetEveryOneRequest{
+		&greetpb.GreetEveryOneRequest{
+			Greeting: &greetpb.Greeting{
+				FirstName: "Taro",
+			},
+		},
+		&greetpb.GreetEveryOneRequest{
+			Greeting: &greetpb.Greeting{
+				FirstName: "Jiro",
+			},
+		},
+		&greetpb.GreetEveryOneRequest{
+			Greeting: &greetpb.Greeting{
+				FirstName: "Saburo",
+			},
+		},
+		&greetpb.GreetEveryOneRequest{
+			Greeting: &greetpb.Greeting{
+				FirstName: "Shiro",
+			},
+		},
+		&greetpb.GreetEveryOneRequest{
+			Greeting: &greetpb.Greeting{
+				FirstName: "Goro",
+			},
+		},
+	}
+
+	waitc := make(chan struct{})
+	// send a bunch of message
+	go func() {
+		for _, req := range requests {
+			fmt.Printf("Sending message: %v\n", req)
+			stream.Send(req)
+			time.Sleep(1000 * time.Millisecond)
+		}
+		stream.CloseSend()
+	}()
+
+	// receive a bunch of message
+	go func() {
+		for {
+			res, err := stream.Recv()
+			if err == io.EOF {
+				break
+			}
+
+			if err != nil {
+				fmt.Printf("Error while receiving: %v\n", err)
+				break
+			}
+			fmt.Printf("Received: %v\n", res.GetResult())
+		}
+		close(waitc)
+	}()
+
+	//
+	<-waitc
 }
 
 func doClientStreaming(c greetpb.GreetServiceClient) {
 	fmt.Println("Starting to do a Client Streaming RPC...")
 
-	requests := []*greetpb.LongGreetRequest {
+	requests := []*greetpb.LongGreetRequest{
 		&greetpb.LongGreetRequest{
 			Greeting: &greetpb.Greeting{
 				FirstName: "Taro",
@@ -62,7 +133,7 @@ func doClientStreaming(c greetpb.GreetServiceClient) {
 
 	stream, err := c.LongGreet(context.Background())
 	if err != nil {
-		  fmt.Printf("error while calling LongServer: %v", err)
+		fmt.Printf("error while calling LongServer: %v", err)
 	}
 
 	for _, req := range requests {
@@ -89,7 +160,7 @@ func doServerStreaming(c greetpb.GreetServiceClient) {
 
 	resStream, err := c.GreetManyTimes(context.Background(), req)
 	if err != nil {
-		fmt.Printf("error while calling GreetManyTimes RPC: %v",err)
+		fmt.Printf("error while calling GreetManyTimes RPC: %v", err)
 	}
 
 	for {
@@ -98,11 +169,10 @@ func doServerStreaming(c greetpb.GreetServiceClient) {
 			break
 		}
 		if err != nil {
-			fmt.Printf("error while reading stream: %v",err)
+			fmt.Printf("error while reading stream: %v", err)
 		}
 		fmt.Printf("Response from GreetManyTimes: %v", msg.GetResult())
 	}
-
 
 }
 
