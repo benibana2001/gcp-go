@@ -67,6 +67,34 @@ func (*server) DecompositManyTimes(req *calculatorpb.DecompositManyTimeRequest, 
 	return nil
 }
 
+// BiDi Streaming
+func (*server) FindMaximum(stream calculatorpb.CalculateService_FindMaximumServer) error {
+	fmt.Printf("FindMaximum function was invoked with a streaming request\n")
+
+	var result int32
+	for {
+		req, err := stream.Recv()
+		if err == io.EOF {
+			return nil
+		}
+		if err != nil {
+			fmt.Printf("Error while reading stream: %v", err)
+		}
+		num := req.GetNumber()
+		if result < num {
+			result = num
+		}
+
+		sendErr := stream.Send(&calculatorpb.FindMaximumResponse{
+			Result: result,
+		})
+		if sendErr != nil {
+			fmt.Printf("Error while sending data to client: %v", err)
+			return err
+		}
+	}
+}
+
 func main() {
 	fmt.Println("Hello Sum Server!")
 
