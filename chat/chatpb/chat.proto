@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package chat;
+option go_package="chatpb";
+
+service MessageService{
+    // メッセージの双方向通信
+    rpc SendMessage(stream SendMessageRequest) returns (stream SendMessageResponse);
+}
+
+message SendMessageRequest {
+    string userId = 1;
+    string message = 2;
+}
+
+message SendMessageResponse {
+    string userId = 1;
+    string message = 2;
+}
