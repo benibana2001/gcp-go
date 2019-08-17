@@ -5,16 +5,20 @@ import (
 	"github.com/benibana2001/gcp-go/chat/chatpb"
 	"google.golang.org/grpc"
 	"io"
-	"log"
 	"net"
 )
 
-type server struct{}
+type server struct {
+	contents []message
+}
+
+type message struct {
+	author string
+	content string
+}
 
 // メッセージの双方向通信
-func (*server) SendMessage(stream chatpb.MessageService_SendMessageServer) error {
-	fmt.Printf("SendMessage function was invoked!\n")
-
+func (s *server) SendMessage(stream chatpb.MessageService_SendMessageServer) error {
 	// リクエストを待ち受ける
 	for {
 		req, err := stream.Recv()
@@ -24,24 +28,42 @@ func (*server) SendMessage(stream chatpb.MessageService_SendMessageServer) error
 			return nil
 		}
 		if err != nil {
-			fmt.Printf("Error occured while Reading stream: %v", err)
+			fmt.Printf("Error occured while Reading stream: %v\n", err)
 		}
 
 		// 送信されてきたデータをパース
-		userId := req.GetUserId()
-		message := req.GetMessage()
+		author := req.GetName()
+		content := req.GetContent()
 
-		fmt.Println(userId + ": " + message)
+		fmt.Println(author + ": " + content)
 
-		sendErr := stream.Send(&chatpb.SendMessageResponse{
-			UserId: "[FROM]: " + userId,
-			Message: "[MESSAGE]: " + message,
+		// メッセージをserverに追加
+		s.contents = append(s.contents, message{
+			author: author,
+			content: content,
 		})
-		if sendErr != nil {
-			fmt.Printf("Error while sending data to client: %v", err)
-			return err
-		}
 	}
+}
+
+func (s *server) GetMessage(req *chatpb.Null, stream chatpb.MessageService_GetMessageServer) error {
+	preNum := len(s.contents)
+	currentNum := 0
+
+	for {
+		currentNum = len(s.contents)
+		if currentNum > preNum {
+			latest := s.contents[len(s.contents)-1]
+			err := stream.Send(&chatpb.Message{
+				Name: latest.author,
+				Content: latest.content,
+			})
+			if err != nil {
+				fmt.Printf("Error was occured while GetMessage: %v\n", err)
+			}
+		}
+		preNum = currentNum
+	}
+
 }
 
 func main() {
@@ -49,14 +71,14 @@ func main() {
 
 	lis, err := net.Listen("tcp", "localhost:50051")
 	if err != nil {
-		log.Fatalf("Failed to listen: %v", err)
+		fmt.Printf("Failed to listen: %v\n", err)
 	}
 
 	s := grpc.NewServer()
 	chatpb.RegisterMessageServiceServer(s, &server{})
 
 	if err := s.Serve(lis); err != nil {
-		log.Fatalf("failed to serve: %v", err)
+		fmt.Printf("failed to serve: %v\n", err)
 	}
 }
 

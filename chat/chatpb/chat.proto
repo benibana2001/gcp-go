@@ -4,16 +4,41 @@ package chat;
 option go_package="chatpb";
 
 service MessageService{
-    // メッセージの双方向通信
-    rpc SendMessage(stream SendMessageRequest) returns (stream SendMessageResponse);
+    rpc SendMessage (stream SendRequest) returns (SendResult) {};
+    rpc GetMessage (Null) returns (stream Message) {}
 }
 
-message SendMessageRequest {
-    string userId = 1;
-    string message = 2;
+message Null{}
+
+message SendRequest{
+    string name = 1;
+    string content = 2;
 }
 
-message SendMessageResponse {
-    string userId = 1;
-    string message = 2;
+message SendResult{
+    bool result = 1;
 }
+
+//message MessageRequest {
+//    string id = 1;
+//}
+
+message Message {
+    string name = 1;
+    string content = 2;
+}
+
+//service MessageService{
+//     メッセージの双方向通信
+//    rpc SendMessage(stream SendMessageRequest) returns (stream SendMessageResponse);
+//}
+
+//message SendMessageRequest {
+//    string userId = 1;
+//    string message = 2;
+//}
+//
+//message SendMessageResponse {
+//    string userId = 1;
+//    string message = 2;
+//}

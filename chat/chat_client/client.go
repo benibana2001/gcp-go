@@ -22,7 +22,13 @@ func main() {
 	client := chatpb.NewMessageServiceClient(cc)
 
 	// Create a Stream
-	stream, err := client.SendMessage(context.Background())
+	getStream, err := client.GetMessage(context.Background(), &chatpb.Null{})
+	if err != nil {
+		fmt.Printf("error was occured while creating stream: %v\n", err)
+		return
+	}
+
+	sendStream, err := client.SendMessage(context.Background())
 	if err != nil {
 		fmt.Printf("error was occured while creating stream: %v\n", err)
 		return
@@ -31,7 +37,7 @@ func main() {
 	// ---
 	ch := make(chan struct{})
 
-	go receive(stream)
+	go receive(getStream)
 
 	go func(){
 		for {
@@ -39,7 +45,7 @@ func main() {
 			// 入力を待ち受ける
 			fmt.Println("Please Input Message")
 			fmt.Scanf("%v", &message)
-			send(stream, message)
+			send(sendStream, message)
 		}
 	}()
 
@@ -48,18 +54,19 @@ func main() {
 
 func send(stream chatpb.MessageService_SendMessageClient, msg string) {
 	// Create a request
-	request := chatpb.SendMessageRequest{
-		UserId:  "Taro",
-		Message: msg,
+	request := chatpb.SendRequest{
+		Name:  "Taro",
+		Content: msg,
 	}
 
 	// Send
-	fmt.Printf("Send message: %v\n", msg)
-	stream.Send(&request)
-
+	//fmt.Printf("Send message: %v\n", msg)
+	if err := stream.Send(&request); err != nil {
+		fmt.Printf("Error was occured while Send: %v\n", err)
+	}
 }
 
-func receive(stream chatpb.MessageService_SendMessageClient) {
+func receive(stream chatpb.MessageService_GetMessageClient) {
 	for {
 
 		fmt.Println("Waiting Message...")
@@ -73,8 +80,7 @@ func receive(stream chatpb.MessageService_SendMessageClient) {
 			fmt.Printf("Error while receiving: %v\n", err)
 			break
 		}
-		fmt.Printf("Received: %v\n", res.GetUserId())
-		fmt.Printf("Received: %v\n", res.GetMessage())
+		fmt.Printf("Received: [%v]%v\n", res.Name, res.Content)
 	}
 }
 
