@@ -7,7 +7,6 @@ import (
 	"google.golang.org/grpc"
 	"io"
 	"log"
-	"time"
 )
 
 func main() {
@@ -20,64 +19,62 @@ func main() {
 
 	defer cc.Close()
 
-	c := chatpb.NewMessageServiceClient(cc)
-
-	Send(c)
-}
-
-var request01 = chatpb.SendMessageRequest{
-	UserId:  "Taro",
-	Message: "Konichiha !",
-}
-var request02 = chatpb.SendMessageRequest{
-	UserId:  "Taro",
-	Message: "Ima Nani Shite Masuka ?",
-}
-
-func Send(c chatpb.MessageServiceClient) {
+	client := chatpb.NewMessageServiceClient(cc)
 
 	// Create a Stream
-	stream, err := c.SendMessage(context.Background())
+	stream, err := client.SendMessage(context.Background())
 	if err != nil {
 		fmt.Printf("error was occured while creating stream: %v\n", err)
 		return
 	}
 
-	requests := []*chatpb.SendMessageRequest{
-		&request01,
-		&request02,
+	// ---
+	ch := make(chan struct{})
+
+	go receive(stream)
+
+	go func(){
+		for {
+			var message string
+			// 入力を待ち受ける
+			fmt.Println("Please Input Message")
+			fmt.Scanf("%v", &message)
+			send(stream, message)
+		}
+	}()
+
+	<-ch
+}
+
+func send(stream chatpb.MessageService_SendMessageClient, msg string) {
+	// Create a request
+	request := chatpb.SendMessageRequest{
+		UserId:  "Taro",
+		Message: msg,
 	}
 
-	waitc := make(chan struct{})
-	// send a bunch of message
-	go func() {
-		for _, req := range requests {
-			fmt.Printf("Sending message: %v\n", req)
-			stream.Send(req)
-			time.Sleep(1000 * time.Millisecond)
-		}
-		stream.CloseSend()
-	}()
-
-	// receive a bunch of message
-	go func() {
-		for {
-			res, err := stream.Recv()
-			if err == io.EOF {
-				break
-			}
-
-			if err != nil {
-				fmt.Printf("Error while receiving: %v\n", err)
-				break
-			}
-			fmt.Printf("Received: %v\n", res.GetUserId())
-			fmt.Printf("Received: %v\n", res.GetMessage())
-		}
-		close(waitc)
-	}()
-
-	//
-	<-waitc
+	// Send
+	fmt.Printf("Send message: %v\n", msg)
+	stream.Send(&request)
 
 }
+
+func receive(stream chatpb.MessageService_SendMessageClient) {
+	for {
+
+		fmt.Println("Waiting Message...")
+
+		res, err := stream.Recv()
+		if err == io.EOF {
+			break
+		}
+
+		if err != nil {
+			fmt.Printf("Error while receiving: %v\n", err)
+			break
+		}
+		fmt.Printf("Received: %v\n", res.GetUserId())
+		fmt.Printf("Received: %v\n", res.GetMessage())
+	}
+}
+
