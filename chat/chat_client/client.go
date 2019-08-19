@@ -24,20 +24,22 @@ func main() {
 	client := chatpb.NewMessageServiceClient(cc)
 
 	// Create a Stream
-	transferStream, err := client.TransferMessage(context.Background(), &chatpb.Null{})
-	if err != nil {
-		fmt.Printf("error was occured while creating stream: %v\n", err)
-		return
-	}
+	//transferStream, err := client.TransferMessage(context.Background(), &chatpb.Null{})
+	//if err != nil {
+	//	fmt.Printf("error was occured while creating stream: %v\n", err)
+	//	return
+	//}
 
-	postStream, err := client.PostMessage(context.Background())
-	if err != nil {
-		fmt.Printf("error was occured while creating stream: %v\n", err)
-		return
-	}
+	//postStream, err := client.PostMessage(context.Background())
+	//if err != nil {
+	//	fmt.Printf("error was occured while creating stream: %v\n", err)
+	//	return
+	//}
+
+	testStream, err := client.Test(context.Background())
 
 	// ---
-	go receive(transferStream)
+	go receive(testStream)
 
 	for {
 		//var message string
@@ -47,11 +49,11 @@ func main() {
 		input.Scan()
 		msg := input.Text()
 		//fmt.Scanf("%v", &message)
-		post(postStream, msg)
+		post(testStream, msg)
 	}
 }
 
-func post(stream chatpb.MessageService_PostMessageClient, msg string) {
+func post(stream chatpb.MessageService_TestClient, msg string) {
 	// Create a request
 	request := chatpb.PostRequest{
 		Name:    "Taro",
@@ -65,7 +67,7 @@ func post(stream chatpb.MessageService_PostMessageClient, msg string) {
 	}
 }
 
-func receive(stream chatpb.MessageService_TransferMessageClient) {
+func receive(stream chatpb.MessageService_TestClient) {
 	for {
 		res, err := stream.Recv()
 		if err == io.EOF {

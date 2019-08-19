@@ -4,8 +4,10 @@ package chat;
 option go_package="chatpb";
 
 service MessageService{
-    rpc PostMessage (stream PostRequest) returns (PostResult) {};
-    rpc TransferMessage (Null) returns (stream TransferResult) {};
+//    rpc PostMessage (stream PostRequest) returns (PostResult) {};
+//    rpc TransferMessage (Null) returns (stream TransferResult) {};
+
+    rpc Test (stream PostRequest) returns (stream TransferResult) {};
 }
 
 message Null{}

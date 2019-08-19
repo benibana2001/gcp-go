@@ -17,8 +17,8 @@ type message struct {
 	content string
 }
 
-// メッセージの双方向通信
-func (s *server) PostMessage(stream chatpb.MessageService_PostMessageServer) error {
+/*
+func a(s *server, stream chatpb.MessageService_PostMessageServer) error{
 	// リクエストを待ち受ける
 	for {
 		req, err := stream.Recv()
@@ -45,7 +45,7 @@ func (s *server) PostMessage(stream chatpb.MessageService_PostMessageServer) err
 	}
 }
 
-func (s *server) TransferMessage(req *chatpb.Null, stream chatpb.MessageService_TransferMessageServer) error {
+func b(s *server, req *chatpb.Null, stream chatpb.MessageService_TransferMessageServer) error {
 	preNum := len(s.contents)
 	currentNum := 0
 
@@ -63,8 +63,70 @@ func (s *server) TransferMessage(req *chatpb.Null, stream chatpb.MessageService_
 		}
 		preNum = currentNum
 	}
-
 }
+
+// メッセージの双方向通信
+func (s *server) PostMessage(stream chatpb.MessageService_PostMessageServer) error {
+	err := a(s, stream)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (s *server) TransferMessage(req *chatpb.Null, stream chatpb.MessageService_TransferMessageServer) error {
+	err := b(s, req, stream)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+*/
+
+func (s *server) Test(stream chatpb.MessageService_TestServer) error {
+	preNum := len(s.contents)
+	currentNum := 0
+
+	// リクエストを待ち受ける
+	for {
+		req, err := stream.Recv()
+
+		// 最後までメッセージを読んだら終了
+		if err == io.EOF {
+			return nil
+		}
+		if err != nil {
+			fmt.Printf("Error occured while Reading stream: %v\n", err)
+		}
+
+		// 送信されてきたデータをパース
+		author := req.GetName()
+		content := req.GetContent()
+
+		fmt.Println(author + ": " + content)
+
+		// メッセージをserverに追加
+		s.contents = append(s.contents, message{
+			author: author,
+			content: content,
+		})
+
+		currentNum = len(s.contents)
+		if currentNum > preNum {
+			latest := s.contents[len(s.contents)-1]
+			err := stream.Send(&chatpb.TransferResult{
+				Name: latest.author,
+				Content: latest.content,
+			})
+			if err != nil {
+				fmt.Printf("Error was occured while GetMessage: %v\n", err)
+			}
+		}
+		preNum = currentNum
+	}
+}
+
+
 
 func main() {
 	fmt.Println("Server is listening...")
