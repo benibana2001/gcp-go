@@ -1,12 +1,14 @@
 package main
 
 import (
+	"bufio"
 	"context"
 	"fmt"
 	"github.com/benibana2001/gcp-go/chat/chatpb"
 	"google.golang.org/grpc"
 	"io"
 	"log"
+	"os"
 )
 
 func main() {
@@ -22,40 +24,37 @@ func main() {
 	client := chatpb.NewMessageServiceClient(cc)
 
 	// Create a Stream
-	getStream, err := client.GetMessage(context.Background(), &chatpb.Null{})
+	transferStream, err := client.TransferMessage(context.Background(), &chatpb.Null{})
 	if err != nil {
 		fmt.Printf("error was occured while creating stream: %v\n", err)
 		return
 	}
 
-	sendStream, err := client.SendMessage(context.Background())
+	postStream, err := client.PostMessage(context.Background())
 	if err != nil {
 		fmt.Printf("error was occured while creating stream: %v\n", err)
 		return
 	}
 
 	// ---
-	ch := make(chan struct{})
+	go receive(transferStream)
 
-	go receive(getStream)
-
-	go func(){
-		for {
-			var message string
-			// 入力を待ち受ける
-			fmt.Println("Please Input Message")
-			fmt.Scanf("%v", &message)
-			send(sendStream, message)
-		}
-	}()
-
-	<-ch
+	for {
+		//var message string
+		// 入力を待ち受ける
+		//fmt.Println("Please Input Message")
+		input := bufio.NewScanner(os.Stdin)
+		input.Scan()
+		msg := input.Text()
+		//fmt.Scanf("%v", &message)
+		post(postStream, msg)
+	}
 }
 
-func send(stream chatpb.MessageService_SendMessageClient, msg string) {
+func post(stream chatpb.MessageService_PostMessageClient, msg string) {
 	// Create a request
-	request := chatpb.SendRequest{
-		Name:  "Taro",
+	request := chatpb.PostRequest{
+		Name:    "Taro",
 		Content: msg,
 	}
 
@@ -66,11 +65,8 @@ func send(stream chatpb.MessageService_SendMessageClient, msg string) {
 	}
 }
 
-func receive(stream chatpb.MessageService_GetMessageClient) {
+func receive(stream chatpb.MessageService_TransferMessageClient) {
 	for {
-
-		fmt.Println("Waiting Message...")
-
 		res, err := stream.Recv()
 		if err == io.EOF {
 			break
@@ -80,7 +76,6 @@ func receive(stream chatpb.MessageService_GetMessageClient) {
 			fmt.Printf("Error while receiving: %v\n", err)
 			break
 		}
-		fmt.Printf("Received: [%v]%v\n", res.Name, res.Content)
+		fmt.Printf(">>>>: [%v]%v\n", res.Name, res.Content)
 	}
 }
-

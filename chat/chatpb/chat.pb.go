@@ -55,7 +55,7 @@ func (m *Null) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_Null proto.InternalMessageInfo
 
-type SendRequest struct {
+type PostRequest struct {
 	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	Content              string   `protobuf:"bytes,2,opt,name=content,proto3" json:"content,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -63,85 +63,85 @@ type SendRequest struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *SendRequest) Reset()         { *m = SendRequest{} }
-func (m *SendRequest) String() string { return proto.CompactTextString(m) }
-func (*SendRequest) ProtoMessage()    {}
-func (*SendRequest) Descriptor() ([]byte, []int) {
+func (m *PostRequest) Reset()         { *m = PostRequest{} }
+func (m *PostRequest) String() string { return proto.CompactTextString(m) }
+func (*PostRequest) ProtoMessage()    {}
+func (*PostRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_56d8c175c0c7a32e, []int{1}
 }
 
-func (m *SendRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_SendRequest.Unmarshal(m, b)
+func (m *PostRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_PostRequest.Unmarshal(m, b)
 }
-func (m *SendRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_SendRequest.Marshal(b, m, deterministic)
+func (m *PostRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_PostRequest.Marshal(b, m, deterministic)
 }
-func (m *SendRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_SendRequest.Merge(m, src)
+func (m *PostRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PostRequest.Merge(m, src)
 }
-func (m *SendRequest) XXX_Size() int {
-	return xxx_messageInfo_SendRequest.Size(m)
+func (m *PostRequest) XXX_Size() int {
+	return xxx_messageInfo_PostRequest.Size(m)
 }
-func (m *SendRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_SendRequest.DiscardUnknown(m)
+func (m *PostRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_PostRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_SendRequest proto.InternalMessageInfo
+var xxx_messageInfo_PostRequest proto.InternalMessageInfo
 
-func (m *SendRequest) GetName() string {
+func (m *PostRequest) GetName() string {
 	if m != nil {
 		return m.Name
 	}
 	return ""
 }
 
-func (m *SendRequest) GetContent() string {
+func (m *PostRequest) GetContent() string {
 	if m != nil {
 		return m.Content
 	}
 	return ""
 }
 
-type SendResult struct {
+type PostResult struct {
 	Result               bool     `protobuf:"varint,1,opt,name=result,proto3" json:"result,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *SendResult) Reset()         { *m = SendResult{} }
-func (m *SendResult) String() string { return proto.CompactTextString(m) }
-func (*SendResult) ProtoMessage()    {}
-func (*SendResult) Descriptor() ([]byte, []int) {
+func (m *PostResult) Reset()         { *m = PostResult{} }
+func (m *PostResult) String() string { return proto.CompactTextString(m) }
+func (*PostResult) ProtoMessage()    {}
+func (*PostResult) Descriptor() ([]byte, []int) {
 	return fileDescriptor_56d8c175c0c7a32e, []int{2}
 }
 
-func (m *SendResult) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_SendResult.Unmarshal(m, b)
+func (m *PostResult) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_PostResult.Unmarshal(m, b)
 }
-func (m *SendResult) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_SendResult.Marshal(b, m, deterministic)
+func (m *PostResult) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_PostResult.Marshal(b, m, deterministic)
 }
-func (m *SendResult) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_SendResult.Merge(m, src)
+func (m *PostResult) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PostResult.Merge(m, src)
 }
-func (m *SendResult) XXX_Size() int {
-	return xxx_messageInfo_SendResult.Size(m)
+func (m *PostResult) XXX_Size() int {
+	return xxx_messageInfo_PostResult.Size(m)
 }
-func (m *SendResult) XXX_DiscardUnknown() {
-	xxx_messageInfo_SendResult.DiscardUnknown(m)
+func (m *PostResult) XXX_DiscardUnknown() {
+	xxx_messageInfo_PostResult.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_SendResult proto.InternalMessageInfo
+var xxx_messageInfo_PostResult proto.InternalMessageInfo
 
-func (m *SendResult) GetResult() bool {
+func (m *PostResult) GetResult() bool {
 	if m != nil {
 		return m.Result
 	}
 	return false
 }
 
-type Message struct {
+type TransferResult struct {
 	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	Content              string   `protobuf:"bytes,2,opt,name=content,proto3" json:"content,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -149,39 +149,39 @@ type Message struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *Message) Reset()         { *m = Message{} }
-func (m *Message) String() string { return proto.CompactTextString(m) }
-func (*Message) ProtoMessage()    {}
-func (*Message) Descriptor() ([]byte, []int) {
+func (m *TransferResult) Reset()         { *m = TransferResult{} }
+func (m *TransferResult) String() string { return proto.CompactTextString(m) }
+func (*TransferResult) ProtoMessage()    {}
+func (*TransferResult) Descriptor() ([]byte, []int) {
 	return fileDescriptor_56d8c175c0c7a32e, []int{3}
 }
 
-func (m *Message) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_Message.Unmarshal(m, b)
+func (m *TransferResult) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_TransferResult.Unmarshal(m, b)
 }
-func (m *Message) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_Message.Marshal(b, m, deterministic)
+func (m *TransferResult) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_TransferResult.Marshal(b, m, deterministic)
 }
-func (m *Message) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Message.Merge(m, src)
+func (m *TransferResult) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferResult.Merge(m, src)
 }
-func (m *Message) XXX_Size() int {
-	return xxx_messageInfo_Message.Size(m)
+func (m *TransferResult) XXX_Size() int {
+	return xxx_messageInfo_TransferResult.Size(m)
 }
-func (m *Message) XXX_DiscardUnknown() {
-	xxx_messageInfo_Message.DiscardUnknown(m)
+func (m *TransferResult) XXX_DiscardUnknown() {
+	xxx_messageInfo_TransferResult.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_Message proto.InternalMessageInfo
+var xxx_messageInfo_TransferResult proto.InternalMessageInfo
 
-func (m *Message) GetName() string {
+func (m *TransferResult) GetName() string {
 	if m != nil {
 		return m.Name
 	}
 	return ""
 }
 
-func (m *Message) GetContent() string {
+func (m *TransferResult) GetContent() string {
 	if m != nil {
 		return m.Content
 	}
@@ -190,29 +190,29 @@ func (m *Message) GetContent() string {
 
 func init() {
 	proto.RegisterType((*Null)(nil), "chat.Null")
-	proto.RegisterType((*SendRequest)(nil), "chat.SendRequest")
-	proto.RegisterType((*SendResult)(nil), "chat.SendResult")
-	proto.RegisterType((*Message)(nil), "chat.Message")
+	proto.RegisterType((*PostRequest)(nil), "chat.PostRequest")
+	proto.RegisterType((*PostResult)(nil), "chat.PostResult")
+	proto.RegisterType((*TransferResult)(nil), "chat.TransferResult")
 }
 
 func init() { proto.RegisterFile("chat/chatpb/chat.proto", fileDescriptor_56d8c175c0c7a32e) }
 
 var fileDescriptor_56d8c175c0c7a32e = []byte{
-	// 209 bytes of a gzipped FileDescriptorProto
+	// 219 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x12, 0x4b, 0xce, 0x48, 0x2c,
 	0xd1, 0x07, 0x11, 0x05, 0x49, 0x60, 0x4a, 0xaf, 0xa0, 0x28, 0xbf, 0x24, 0x5f, 0x88, 0x05, 0xc4,
-	0x56, 0x62, 0xe3, 0x62, 0xf1, 0x2b, 0xcd, 0xc9, 0x51, 0xb2, 0xe6, 0xe2, 0x0e, 0x4e, 0xcd, 0x4b,
+	0x56, 0x62, 0xe3, 0x62, 0xf1, 0x2b, 0xcd, 0xc9, 0x51, 0xb2, 0xe6, 0xe2, 0x0e, 0xc8, 0x2f, 0x2e,
 	0x09, 0x4a, 0x2d, 0x2c, 0x4d, 0x2d, 0x2e, 0x11, 0x12, 0xe2, 0x62, 0xc9, 0x4b, 0xcc, 0x4d, 0x95,
 	0x60, 0x54, 0x60, 0xd4, 0xe0, 0x0c, 0x02, 0xb3, 0x85, 0x24, 0xb8, 0xd8, 0x93, 0xf3, 0xf3, 0x4a,
 	0x52, 0xf3, 0x4a, 0x24, 0x98, 0xc0, 0xc2, 0x30, 0xae, 0x92, 0x0a, 0x17, 0x17, 0x44, 0x73, 0x71,
 	0x69, 0x4e, 0x89, 0x90, 0x18, 0x17, 0x5b, 0x11, 0x98, 0x05, 0xd6, 0xcd, 0x11, 0x04, 0xe5, 0x29,
-	0x99, 0x73, 0xb1, 0xfb, 0xa6, 0x16, 0x17, 0x27, 0xa6, 0xa7, 0x92, 0x66, 0xbc, 0x51, 0x29, 0x17,
-	0x1f, 0x54, 0x63, 0x70, 0x6a, 0x51, 0x59, 0x66, 0x72, 0xaa, 0x90, 0x19, 0xc4, 0xb5, 0x30, 0xe3,
-	0x04, 0xf5, 0xc0, 0xfe, 0x42, 0xf2, 0x80, 0x94, 0x00, 0xb2, 0x10, 0xd8, 0x7a, 0x06, 0x0d, 0x46,
-	0x21, 0x6d, 0x2e, 0x2e, 0xf7, 0xd4, 0x12, 0x98, 0x36, 0x2e, 0x88, 0x1a, 0x90, 0xff, 0xa5, 0x78,
-	0x21, 0x6c, 0xa8, 0x94, 0x12, 0x83, 0x01, 0xa3, 0x13, 0x47, 0x14, 0x1b, 0x24, 0xd4, 0x92, 0xd8,
-	0xc0, 0x21, 0x66, 0x0c, 0x08, 0x00, 0x00, 0xff, 0xff, 0xc8, 0xd0, 0x9b, 0x79, 0x4b, 0x01, 0x00,
-	0x00,
+	0xd9, 0x71, 0xf1, 0x85, 0x14, 0x25, 0xe6, 0x15, 0xa7, 0xa5, 0x16, 0x41, 0x55, 0x92, 0x64, 0x8b,
+	0x51, 0x23, 0x23, 0x17, 0x9f, 0x6f, 0x6a, 0x71, 0x71, 0x62, 0x7a, 0x6a, 0x70, 0x6a, 0x51, 0x59,
+	0x66, 0x72, 0xaa, 0x90, 0x19, 0xc4, 0xd5, 0x50, 0x51, 0x21, 0x41, 0x3d, 0xb0, 0xff, 0x90, 0x3c,
+	0x22, 0x25, 0x80, 0x2c, 0x04, 0x76, 0x06, 0x83, 0x06, 0xa3, 0x90, 0x39, 0x17, 0x3f, 0xcc, 0x29,
+	0x30, 0xbd, 0x5c, 0x10, 0x85, 0xa0, 0xc0, 0x90, 0x12, 0x81, 0xb0, 0x51, 0x5d, 0xab, 0xc4, 0x60,
+	0xc0, 0xe8, 0xc4, 0x11, 0xc5, 0x06, 0x09, 0xc9, 0x24, 0x36, 0x70, 0x28, 0x1a, 0x03, 0x02, 0x00,
+	0x00, 0xff, 0xff, 0x9f, 0x3e, 0x12, 0xd1, 0x5f, 0x01, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -227,8 +227,8 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type MessageServiceClient interface {
-	SendMessage(ctx context.Context, opts ...grpc.CallOption) (MessageService_SendMessageClient, error)
-	GetMessage(ctx context.Context, in *Null, opts ...grpc.CallOption) (MessageService_GetMessageClient, error)
+	PostMessage(ctx context.Context, opts ...grpc.CallOption) (MessageService_PostMessageClient, error)
+	TransferMessage(ctx context.Context, in *Null, opts ...grpc.CallOption) (MessageService_TransferMessageClient, error)
 }
 
 type messageServiceClient struct {
@@ -239,46 +239,46 @@ func NewMessageServiceClient(cc *grpc.ClientConn) MessageServiceClient {
 	return &messageServiceClient{cc}
 }
 
-func (c *messageServiceClient) SendMessage(ctx context.Context, opts ...grpc.CallOption) (MessageService_SendMessageClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_MessageService_serviceDesc.Streams[0], "/chat.MessageService/SendMessage", opts...)
+func (c *messageServiceClient) PostMessage(ctx context.Context, opts ...grpc.CallOption) (MessageService_PostMessageClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_MessageService_serviceDesc.Streams[0], "/chat.MessageService/PostMessage", opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &messageServiceSendMessageClient{stream}
+	x := &messageServicePostMessageClient{stream}
 	return x, nil
 }
 
-type MessageService_SendMessageClient interface {
-	Send(*SendRequest) error
-	CloseAndRecv() (*SendResult, error)
+type MessageService_PostMessageClient interface {
+	Send(*PostRequest) error
+	CloseAndRecv() (*PostResult, error)
 	grpc.ClientStream
 }
 
-type messageServiceSendMessageClient struct {
+type messageServicePostMessageClient struct {
 	grpc.ClientStream
 }
 
-func (x *messageServiceSendMessageClient) Send(m *SendRequest) error {
+func (x *messageServicePostMessageClient) Send(m *PostRequest) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *messageServiceSendMessageClient) CloseAndRecv() (*SendResult, error) {
+func (x *messageServicePostMessageClient) CloseAndRecv() (*PostResult, error) {
 	if err := x.ClientStream.CloseSend(); err != nil {
 		return nil, err
 	}
-	m := new(SendResult)
+	m := new(PostResult)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
 }
 
-func (c *messageServiceClient) GetMessage(ctx context.Context, in *Null, opts ...grpc.CallOption) (MessageService_GetMessageClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_MessageService_serviceDesc.Streams[1], "/chat.MessageService/GetMessage", opts...)
+func (c *messageServiceClient) TransferMessage(ctx context.Context, in *Null, opts ...grpc.CallOption) (MessageService_TransferMessageClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_MessageService_serviceDesc.Streams[1], "/chat.MessageService/TransferMessage", opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &messageServiceGetMessageClient{stream}
+	x := &messageServiceTransferMessageClient{stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -288,17 +288,17 @@ func (c *messageServiceClient) GetMessage(ctx context.Context, in *Null, opts ..
 	return x, nil
 }
 
-type MessageService_GetMessageClient interface {
-	Recv() (*Message, error)
+type MessageService_TransferMessageClient interface {
+	Recv() (*TransferResult, error)
 	grpc.ClientStream
 }
 
-type messageServiceGetMessageClient struct {
+type messageServiceTransferMessageClient struct {
 	grpc.ClientStream
 }
 
-func (x *messageServiceGetMessageClient) Recv() (*Message, error) {
-	m := new(Message)
+func (x *messageServiceTransferMessageClient) Recv() (*TransferResult, error) {
+	m := new(TransferResult)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
@@ -307,69 +307,69 @@ func (x *messageServiceGetMessageClient) Recv() (*Message, error) {
 
 // MessageServiceServer is the server API for MessageService service.
 type MessageServiceServer interface {
-	SendMessage(MessageService_SendMessageServer) error
-	GetMessage(*Null, MessageService_GetMessageServer) error
+	PostMessage(MessageService_PostMessageServer) error
+	TransferMessage(*Null, MessageService_TransferMessageServer) error
 }
 
 // UnimplementedMessageServiceServer can be embedded to have forward compatible implementations.
 type UnimplementedMessageServiceServer struct {
 }
 
-func (*UnimplementedMessageServiceServer) SendMessage(srv MessageService_SendMessageServer) error {
-	return status.Errorf(codes.Unimplemented, "method SendMessage not implemented")
+func (*UnimplementedMessageServiceServer) PostMessage(srv MessageService_PostMessageServer) error {
+	return status.Errorf(codes.Unimplemented, "method PostMessage not implemented")
 }
-func (*UnimplementedMessageServiceServer) GetMessage(req *Null, srv MessageService_GetMessageServer) error {
-	return status.Errorf(codes.Unimplemented, "method GetMessage not implemented")
+func (*UnimplementedMessageServiceServer) TransferMessage(req *Null, srv MessageService_TransferMessageServer) error {
+	return status.Errorf(codes.Unimplemented, "method TransferMessage not implemented")
 }
 
 func RegisterMessageServiceServer(s *grpc.Server, srv MessageServiceServer) {
 	s.RegisterService(&_MessageService_serviceDesc, srv)
 }
 
-func _MessageService_SendMessage_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(MessageServiceServer).SendMessage(&messageServiceSendMessageServer{stream})
+func _MessageService_PostMessage_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(MessageServiceServer).PostMessage(&messageServicePostMessageServer{stream})
 }
 
-type MessageService_SendMessageServer interface {
-	SendAndClose(*SendResult) error
-	Recv() (*SendRequest, error)
+type MessageService_PostMessageServer interface {
+	SendAndClose(*PostResult) error
+	Recv() (*PostRequest, error)
 	grpc.ServerStream
 }
 
-type messageServiceSendMessageServer struct {
+type messageServicePostMessageServer struct {
 	grpc.ServerStream
 }
 
-func (x *messageServiceSendMessageServer) SendAndClose(m *SendResult) error {
+func (x *messageServicePostMessageServer) SendAndClose(m *PostResult) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *messageServiceSendMessageServer) Recv() (*SendRequest, error) {
-	m := new(SendRequest)
+func (x *messageServicePostMessageServer) Recv() (*PostRequest, error) {
+	m := new(PostRequest)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
 }
 
-func _MessageService_GetMessage_Handler(srv interface{}, stream grpc.ServerStream) error {
+func _MessageService_TransferMessage_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(Null)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(MessageServiceServer).GetMessage(m, &messageServiceGetMessageServer{stream})
+	return srv.(MessageServiceServer).TransferMessage(m, &messageServiceTransferMessageServer{stream})
 }
 
-type MessageService_GetMessageServer interface {
-	Send(*Message) error
+type MessageService_TransferMessageServer interface {
+	Send(*TransferResult) error
 	grpc.ServerStream
 }
 
-type messageServiceGetMessageServer struct {
+type messageServiceTransferMessageServer struct {
 	grpc.ServerStream
 }
 
-func (x *messageServiceGetMessageServer) Send(m *Message) error {
+func (x *messageServiceTransferMessageServer) Send(m *TransferResult) error {
 	return x.ServerStream.SendMsg(m)
 }
 
@@ -379,13 +379,13 @@ var _MessageService_serviceDesc = grpc.ServiceDesc{
 	Methods:     []grpc.MethodDesc{},
 	Streams: []grpc.StreamDesc{
 		{
-			StreamName:    "SendMessage",
-			Handler:       _MessageService_SendMessage_Handler,
+			StreamName:    "PostMessage",
+			Handler:       _MessageService_PostMessage_Handler,
 			ClientStreams: true,
 		},
 		{
-			StreamName:    "GetMessage",
-			Handler:       _MessageService_GetMessage_Handler,
+			StreamName:    "TransferMessage",
+			Handler:       _MessageService_TransferMessage_Handler,
 			ServerStreams: true,
 		},
 	},

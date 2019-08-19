@@ -18,7 +18,7 @@ type message struct {
 }
 
 // メッセージの双方向通信
-func (s *server) SendMessage(stream chatpb.MessageService_SendMessageServer) error {
+func (s *server) PostMessage(stream chatpb.MessageService_PostMessageServer) error {
 	// リクエストを待ち受ける
 	for {
 		req, err := stream.Recv()
@@ -45,7 +45,7 @@ func (s *server) SendMessage(stream chatpb.MessageService_SendMessageServer) err
 	}
 }
 
-func (s *server) GetMessage(req *chatpb.Null, stream chatpb.MessageService_GetMessageServer) error {
+func (s *server) TransferMessage(req *chatpb.Null, stream chatpb.MessageService_TransferMessageServer) error {
 	preNum := len(s.contents)
 	currentNum := 0
 
@@ -53,7 +53,7 @@ func (s *server) GetMessage(req *chatpb.Null, stream chatpb.MessageService_GetMe
 		currentNum = len(s.contents)
 		if currentNum > preNum {
 			latest := s.contents[len(s.contents)-1]
-			err := stream.Send(&chatpb.Message{
+			err := stream.Send(&chatpb.TransferResult{
 				Name: latest.author,
 				Content: latest.content,
 			})
